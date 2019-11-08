@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-toolbar color="medium">
+      <ion-buttons slot="start">
+          <ion-back-button defaultHref="/ugb"></ion-back-button>
+        </ion-buttons>
+      <ion-title>
+        UGBs
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-card class="welcome-card">
+      <ion-item>
+        <ion-label>UGBs</ion-label>
+        <ion-select (ionChange)="onChangeUGB($event)">
+          <ion-select-option value="1" selected>Brilho do Sol</ion-select-option>
+          <ion-select-option value="2">Os Parceiros</ion-select-option>
+          <ion-select-option value="3">Da Paz</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-card-header>
+        <ion-card-subtitle>{{activityName}}</ion-card-subtitle>
+        <ion-card-title>{{name}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #barChart></canvas>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+  
