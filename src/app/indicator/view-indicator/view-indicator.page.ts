@@ -1,6 +1,11 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+@Injectable({
+  providedIn: 'root'
+})
 @Component({
   selector: 'app-view-indicator',
   templateUrl: './view-indicator.page.html',
@@ -17,6 +22,7 @@ export class ViewIndicatorPage implements OnInit {
 
   constructor(
     public activatedRoute: ActivatedRoute,
+    private geolocation: Geolocation
   ) { }
 
   ngOnInit() {
@@ -133,6 +139,18 @@ export class ViewIndicatorPage implements OnInit {
 
   saveAllData() {
     console.log(this.indicators);
+    this.getCurrentPosition();
   }
+
+  getCurrentPosition() {
+    this.geolocation.getCurrentPosition().then((resp) => {
+      console.log(resp.coords.latitude);
+      console.log(resp.coords.longitude);
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+  }
+
+
 
 }
