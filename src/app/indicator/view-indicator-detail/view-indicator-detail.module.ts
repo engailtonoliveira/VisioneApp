@@ -5,12 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ViewUgbsPage } from './view-ugbs.page';
+import { ViewIndicatorDetailPage } from './view-indicator-detail.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ViewUgbsPage
+    component: ViewIndicatorDetailPage
   }
 ];
 
@@ -21,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ViewUgbsPage]
+  declarations: [ViewIndicatorDetailPage]
 })
-export class ViewUgbsPageModule {}
+export class ViewIndicatorDetailPageModule {}

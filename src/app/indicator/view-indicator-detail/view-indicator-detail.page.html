@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/view-indicator/{{ugbId}}"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{interfaceHeaderTitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>    
+    <ion-card-header>
+      <ion-card-subtitle>{{cardHeaderTitle}}</ion-card-subtitle>
+      <ion-card-title>{{cardHeaderSubtitle}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div *ngIf="isChequeList">
+        <ion-item  *ngFor="let item of itensIndicator">
+          <ion-label>{{item.itensChecar}}</ion-label>
+          <ion-select [(ngModel)]="item.value" name="item.value" value="Avaliação" interface="popover">
+            <ion-select-option value="0">Nada Ok</ion-select-option>
+            <ion-select-option value="3">Minoria Ok</ion-select-option>
+            <ion-select-option value="7">Maioria Ok</ion-select-option>
+            <ion-select-option value="10">Tudo OK</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+      <div *ngIf="isMethodDirect">
+        <ion-item *ngFor="let item of indicator">
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <div style="margin-top: 12px">{{item.nome}}</div>
+                </ion-col>
+                <ion-col>
+                  <div></div>
+                </ion-col>
+                <ion-col>
+                  <div></div>
+                </ion-col>
+                <ion-col>
+                  <div><ion-input type="number" [(ngModel)]="item.value" name="item.value" slot="end" placeholder="Valor"></ion-input></div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+      </div>
+    </ion-card-content>
+    <ion-button expand="block" (click)="saveValues($event)" size="large">Salvar</ion-button>
+  </ion-card>
+</ion-content>
+  
+

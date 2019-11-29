@@ -24,12 +24,8 @@ const routes: Routes = [
     loadChildren: () => import('./indicator/indicator.module').then(m => m.IndicatorPageModule)
   },
   {
-    path: 'view-indicator/:id/:ugb_id',
+    path: 'view-indicator/:ugb_id',
     loadChildren: () => import('./indicator/view-indicator/view-indicator.module').then(m => m.ViewIndicatorPageModule)
-  },
-  {
-    path: 'view-ugbs/:id',
-    loadChildren: () => import('./indicator/view-ugbs/view-ugbs.module').then(m => m.ViewUgbsPageModule)
   },
   {
     path: 'ugb',
@@ -38,6 +34,10 @@ const routes: Routes = [
   {
     path: 'view-grafic/:id',
     loadChildren: () => import('./ugb/view-grafic/view-grafic.module').then(m => m.ViewGraficPageModule)
+  },
+  {
+    path: 'view-indicator-detail/:ugb_id/:indicator_id/:is_checkList/:ugb_name',
+    loadChildren: () => import('./indicator/view-indicator-detail/view-indicator-detail.module').then(m => m.ViewIndicatorDetailPageModule)
   }
 ];
 

@@ -1,11 +1,8 @@
+import { LoadingController, AlertController } from '@ionic/angular';
+import { IndicadoresService } from './../../service/indicadores.service';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-
-@Injectable({
-  providedIn: 'root'
-})
 @Component({
   selector: 'app-view-indicator',
   templateUrl: './view-indicator.page.html',
@@ -13,144 +10,67 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 })
 export class ViewIndicatorPage implements OnInit {
 
-  private activityId: number;
-  private activityName: string;
+  private allIndicators: any;
+  private ugbId;
+  private interfaceHeaderTitle = 'Indicadores';
 
-  private ugbId: number;
-  private ugbName: string;
-  public indicators: Array<{ id: number; name: string; value: number }>;
+  public indicators: Array<{
+    id: number;
+    idUGB: string;
+    nome: string;
+    nomeUGB: string;
+    meta: number;
+    valorMaximo: number;
+    valorMinimo: number;
+    metodoPreenchimento: boolean;
+  }>;
 
   constructor(
-    public activatedRoute: ActivatedRoute,
-    private geolocation: Geolocation
-  ) { }
+    private activatedRoute: ActivatedRoute,
+    private indicator: IndicadoresService,
+    private loadingCtrl: LoadingController,
+    private alertController: AlertController
+  ) {
+    this.activatedRoute.paramMap.subscribe( params => {
+      this.ugbId = params.get('ugb_id');
+    });
+  }
 
   ngOnInit() {
-    const id = this.activatedRoute.paramMap.subscribe(params => {
-      this.activityId = parseInt(params.get('id'), 8);
-      this.ugbId = parseInt(params.get('ugb_id'), 8 );
+    this.initializeItems(this.ugbId);
+  }
+
+  async initializeItems(ugbId: number) {
+    const loading = await this.loadingCtrl.create();
+    await loading.present();
+    this.indicator.getIndicators(ugbId).subscribe((result) => {
+      loading.dismiss();
+      this.indicators = result;
+      this.allIndicators = result;
+    }, (err) => {
+      loading.dismiss();
+      this.presentAlert(err.message);
     });
   }
 
-  ionViewWillEnter() {
-    switch ( this.activityId ) {
-      case 1:
-        this.activityName = 'Amarrio Verde';
-        this.indicators = [{
-          id: 1,
-          name: 'Indicator1',
-          value: null
-        }, {
-          id: 2,
-          name: 'Indicator2',
-          value: null
-        }, {
-          id: 2,
-          name: 'Indicator3',
-          value: null
-        }];
-        break;
-      case 2:
-        this.activityName = 'Roço';
-        this.indicators = [{
-          id: 4,
-          name: 'Indicator4',
-          value: null
-        }, {
-          id: 5,
-          name: 'Indicator5',
-          value: null
-        }, {
-          id: 6,
-          name: 'Indicator6',
-          value: null
-        }];
-        break;
-      case 3:
-        this.activityName = 'Poda';
-        this.indicators = [{
-          id: 7,
-          name: 'Indicator7',
-          value: null
-        }, {
-          id: 8,
-          name: 'Indicator8',
-          value: null
-        }, {
-          id: 9,
-          name: 'Indicator9',
-          value: null
-        }];
-        break;
-        case 4:
-          this.activityName = 'Manutenção de Latadas';
-          this.indicators = [{
-            id: 7,
-            name: 'Indicator8',
-            value: null
-          }];
-          break;
-        case 5:
-          this.activityName = 'Contagem de Brotação';
-          this.indicators = [{
-            id: 7,
-            name: 'Indicator9',
-            value: null
-          }];
-          break;
-        case 6:
-            this.activityName = 'Desbrota';
-            this.indicators = [{
-              id: 7,
-              name: 'Indicator10',
-              value: null
-            }];
-            break;
-      default:
-        break;
-    }
-
-    switch ( this.ugbId ) {
-      case 1:
-        this.ugbName = 'Brilho do Sol';
-        break;
-      case 2:
-        this.ugbName = 'Os Parceiros';
-        break;
-      case 3:
-        this.ugbName = 'Da Paz';
-        break;
-      case 4:
-        this.ugbName = 'As minas';
-        break;
-      case 5:
-        this.ugbName = 'UGB5';
-        break;
-      case 6:
-        this.ugbName = 'UGB6';
-        break;
-      case 7:
-        this.ugbName = 'UGB7';
-        break;
-      default:
-        break;
+  getItems(ev: any) {
+    let val = ev.target.value;
+    if (val && val.trim() !== '') {
+      this.indicators = this.allIndicators;
+      this.indicators = this.indicators.filter((item) => {
+        return (item.nome.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
+    } else {
+      this.indicators = this.allIndicators;
     }
   }
 
-  saveAllData() {
-    console.log(this.indicators);
-    this.getCurrentPosition();
-  }
-
-  getCurrentPosition() {
-    this.geolocation.getCurrentPosition().then((resp) => {
-      console.log(resp.coords.latitude);
-      console.log(resp.coords.longitude);
-    }).catch((error) => {
-      console.log('Error getting location', error);
+  async presentAlert( msg: any ) {
+    const alert = await this.alertController.create({
+      message: msg,
+      buttons: ['OK']
     });
+    await alert.present();
   }
-
-
 
 }

@@ -1,38 +1,18 @@
 <ion-header>
   <ion-toolbar color="medium">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/view-ugbs"></ion-back-button>
+        <ion-back-button defaultHref="/indicator"></ion-back-button>
     </ion-buttons>
-    <ion-title>Indicadores</ion-title>
+    <ion-title>{{interfaceHeaderTitle}}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar placeholder="Digita a UGB" (ionInput)="getItems($event)" clearInput></ion-searchbar>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  <ion-card>    
-    <ion-card-header>
-      <ion-card-subtitle>{{activityName}}</ion-card-subtitle>
-      <ion-card-title>{{ugbName}}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item *ngFor="let item of indicators">
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <div style="margin-top: 12px">{{item.name}}</div>
-            </ion-col>
-            <ion-col>
-              <div></div>
-            </ion-col>
-            <ion-col>
-              <div></div>
-            </ion-col>
-            <ion-col>
-              <div><ion-input type="number" [(ngModel)]="item.value" name="item.value" slot="end" placeholder="nota"></ion-input></div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-    </ion-card-content>
-    <ion-button expand="block" (click)="saveAllData()" size="large">Salvar</ion-button>
-  </ion-card>
+<ion-content fullscreen>
+  <ion-list *ngFor="let item of indicators">
+    <ion-item routerDirection="forward" [routerLink]="['/view-indicator-detail', item.idUGB, item.id, item.metodoPreenchimento, item.nomeUgb]">
+      <ion-label class="ion-text-wrap">{{item.nome}}</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
-  

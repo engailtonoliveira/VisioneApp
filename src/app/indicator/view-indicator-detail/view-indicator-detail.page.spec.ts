@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewUgbsPage } from './view-ugbs.page';
+import { ViewIndicatorDetailPage } from './view-indicator-detail.page';
 
-describe('ViewUgbsPage', () => {
-  let component: ViewUgbsPage;
-  let fixture: ComponentFixture<ViewUgbsPage>;
+describe('ViewIndicatorDetailPage', () => {
+  let component: ViewIndicatorDetailPage;
+  let fixture: ComponentFixture<ViewIndicatorDetailPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewUgbsPage ],
+      declarations: [ ViewIndicatorDetailPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ViewUgbsPage);
+    fixture = TestBed.createComponent(ViewIndicatorDetailPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
