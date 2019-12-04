@@ -52,6 +52,16 @@ export class IndicadoresService {
     return this.http.get<any>(this.apiUrl + controller);
   }
 
+  public setIndicatorData(indicatorDada: any): Observable<any> {
+    const controller = 'Indicador_Dados';
+    return this.http.post<any>(this.apiUrl + controller, indicatorDada);
+  }
+
+  public getPosition(): Promise<any> {
+    return this.geolocation.getCurrentPosition();
+  }
+
+
   /*public getIndicators(ugbId: number): Promise<any> {
     const controller = 'UGB_Indicadores/UGB/' + ugbId;
     return new Promise((resolve, reject) => {
@@ -91,7 +101,6 @@ export class IndicadoresService {
     });
   }
 
-
   public async saveValues(ugb: {id: number, name: string, actId: number, actName: string,
     indicator: Array<{ id: number; name: string; value: number }> }) {
 
@@ -118,6 +127,7 @@ export class IndicadoresService {
       throw error;
     });
   }
+
   public getUgbs(IdLider: number): Promise<any> {
     const controller = 'UGBs/lider/' + IdLider;
     return new Promise((resolve, reject) => {

@@ -16,11 +16,11 @@
       <div *ngIf="isChequeList">
         <ion-item  *ngFor="let item of itensIndicator">
           <ion-label>{{item.itensChecar}}</ion-label>
-          <ion-select [(ngModel)]="item.value" name="item.value" value="Avaliação" interface="popover">
-            <ion-select-option value="0">Nada Ok</ion-select-option>
-            <ion-select-option value="3">Minoria Ok</ion-select-option>
-            <ion-select-option value="7">Maioria Ok</ion-select-option>
-            <ion-select-option value="10">Tudo OK</ion-select-option>
+          <ion-select [(ngModel)]="item.dado" name="item.dado" value="Avaliação" interface="popover" placeholder="Seleciona uma Situação">
+            <ion-select-option value="0">Nada Atendido</ion-select-option>
+            <ion-select-option value="1">Minoria Atendido</ion-select-option>
+            <ion-select-option value="2">Maioria Atendido</ion-select-option>
+            <ion-select-option value="3">Tudo Atendido</ion-select-option>
           </ion-select>
         </ion-item>
       </div>
@@ -38,7 +38,7 @@
                   <div></div>
                 </ion-col>
                 <ion-col>
-                  <div><ion-input type="number" [(ngModel)]="item.value" name="item.value" slot="end" placeholder="Valor"></ion-input></div>
+                  <div><ion-input type="number" [(ngModel)]="item.value" max={{item.escalaMax}} min={{item.escalaMin}} name="item.value" slot="end" placeholder="Valor"></ion-input></div>
                 </ion-col>
               </ion-row>
             </ion-grid>
